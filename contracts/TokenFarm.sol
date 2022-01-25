@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract TokenFarm {
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract TokenFarm is Ownable {
     // stakeTokens
     // unStakeTokens
     // issueTokens - rewards for staking
@@ -14,6 +16,10 @@ contract TokenFarm {
         // what tokens can they stake?
         // how much can they stake?
         require(_amount > 0, "Amount must be more than 0");
+    }
+
+    function addAllowedTokens(address _token) public onlyOwner {
+        allowedTokens.push(_token);
     }
 
     function tokenIsAllowed(address _token) public returns (bool) {
