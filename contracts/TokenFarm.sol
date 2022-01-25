@@ -10,5 +10,6 @@ contract TokenFarm {
     function stakeTokens(uint256 _amount, address _token) public {
         // what tokens can they stake?
         // how much can they stake?
+        require(_amount > 0, "Amount must be more than 0");
     }
 }
