@@ -12,4 +12,6 @@ contract TokenFarm {
         // how much can they stake?
         require(_amount > 0, "Amount must be more than 0");
     }
+
+    function tokenIsAllowed(address _token) public returns (bool) {}
 }
