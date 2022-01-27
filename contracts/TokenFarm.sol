@@ -33,6 +33,9 @@ contract TokenFarm is Ownable {
         stakingBalance[_token][msg.sender] =
             stakingBalance[_token][msg.sender] +
             _amount;
+        if (uniqueTokensStaked[msg.sender] == 1) {
+            stakers.push(msg.sender);
+        }
     }
 
     function updateUniqueTokensStaked(address _user, address _token) internal {
