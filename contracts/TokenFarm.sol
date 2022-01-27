@@ -11,6 +11,9 @@ contract TokenFarm is Ownable {
     // addAllowedTokens
     // getEthValue
 
+    // mapping token address -> staker address -> amount
+    mapping(address => mapping(address => uint256)) public stakingBalance;
+
     address[] public allowedTokens;
 
     function stakeTokens(uint256 _amount, address _token) public {
