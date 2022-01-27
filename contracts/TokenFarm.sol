@@ -20,6 +20,9 @@ contract TokenFarm is Ownable {
         require(_amount > 0, "Amount must be more than 0");
         require(tokenIsAllowed(_token), "Token is currently no allowed");
         IERC20(_token).transferFrom(msg.sender, address(this), _amount);
+        stakingBalance[_token][msg.sender] =
+            stakingBalance[_token][msg.sender] +
+            _amount;
     }
 
     function addAllowedTokens(address _token) public onlyOwner {
