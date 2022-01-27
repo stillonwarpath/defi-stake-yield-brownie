@@ -16,6 +16,7 @@ contract TokenFarm is Ownable {
         // what tokens can they stake?
         // how much can they stake?
         require(_amount > 0, "Amount must be more than 0");
+        require(tokenIsAllowed(_token), "Token is currently no allowed");
     }
 
     function addAllowedTokens(address _token) public onlyOwner {
