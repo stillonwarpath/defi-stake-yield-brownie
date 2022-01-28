@@ -56,6 +56,8 @@ contract TokenFarm is Ownable {
         if (uniqueTokensStaked[_user] <= 0) {
             return 0;
         }
+        // price of the token * stakingBalance[_token][user]
+        getTokenValue(_token);
     }
 
     function stakeTokens(uint256 _amount, address _token) public {
