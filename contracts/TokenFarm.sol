@@ -48,6 +48,16 @@ contract TokenFarm is Ownable {
         }
     }
 
+    function getUserSingleTokenValue(address _user, address _token) public view returns (uint256) {
+        // 1 ETH -> $2,000
+        // 2000
+        // 200 DAI -> $200
+        // 200
+        if (uniqueTokensStaked[_user] <= 0) {
+            return 0;
+        }
+    }
+
     function stakeTokens(uint256 _amount, address _token) public {
         require(_amount > 0, "Amount must be more than 0");
         require(tokenIsAllowed(_token), "Token is currently no allowed");
