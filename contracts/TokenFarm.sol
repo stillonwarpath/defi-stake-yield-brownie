@@ -33,7 +33,9 @@ contract TokenFarm is Ownable {
             stakersIndex++
         ) {
             address recipient = stakers[stakersIndex];
+            uint256 userTotalValue =
             // send them a token reward
+            dappToken.transfer(recipient, ????);
             // based on their total value locked
         }
     }
