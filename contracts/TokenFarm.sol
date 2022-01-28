@@ -33,10 +33,18 @@ contract TokenFarm is Ownable {
             stakersIndex++
         ) {
             address recipient = stakers[stakersIndex];
-            uint256 userTotalValue =
+            uint256 userTotalValue = getUserTotalValue(recipient);
             // send them a token reward
             dappToken.transfer(recipient, ????);
             // based on their total value locked
+        }
+    }
+
+    function getUserTotalValue(address _user) public view returns (uint256) {
+        uint256 totalValue = 0;
+        require(uniqueTokensStaked[_user] > 0, "No tokens staked!");
+        for (uint256 allowedTokensIndex = 0; allowedTokensIndex < allowedTokens.length; allowedTokensIndex++) {
+            totalValue = totalValue + getUserSingleTokenValue(_user, allowedTokens[allowedTokensIndex]);
         }
     }
 
