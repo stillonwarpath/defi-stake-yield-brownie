@@ -18,11 +18,24 @@ contract TokenFarm is Ownable {
     mapping(address => mapping(address => uint256)) public stakingBalance;
     mapping(address => uint256) public uniqueTokensStaked;
     address[] public stakers;
-
     address[] public allowedTokens;
+    IERC20 public dappToken;
+
+    constructor(address _dappTokenAddress) public {
+        dappToken = IERC20(_dappTokenAddress);
+    }
 
     function issueTokens() public onlyOwner {
         // Issue tokens to all stakers
+        for (
+            uint256 stakerIndex = 0;
+            stakersIndex < stakers.length;
+            stakersIndex++
+        ) {
+            address recipient = stakers[stakersIndex];
+            // send them a token reward
+            // based on their total value locked
+        }
     }
 
     function stakeTokens(uint256 _amount, address _token) public {
