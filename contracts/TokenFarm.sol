@@ -3,6 +3,8 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@chainlink/contracts/src/interfaces/AggregatorV3Interface.sol";
+
 
 contract TokenFarm is Ownable {
     // stakeTokens
@@ -67,6 +69,9 @@ contract TokenFarm is Ownable {
 
     function getTokenValue(address _token) public view returns (uint256) {
         // priceFeedAddress
+        address priceFeedAddress = tokenPriceFeedMapping[_token];
+        AggregatorV3Interface priceFeed = AggregatorV3Interface(priceFeedAddress); 
+        (,int256 price,,,) = priceFeed.latestRoundData();
     }
 
     function stakeTokens(uint256 _amount, address _token) public {
