@@ -26,6 +26,10 @@ contract TokenFarm is Ownable {
         dappToken = IERC20(_dappTokenAddress);
     }
 
+    function setPriceFeedContract(address _token, address _priceFeed) public onlyOwner {
+        tokenPriceFeedMapping[_token] = _priceFeed;
+    }
+
     function issueTokens() public onlyOwner {
         // Issue tokens to all stakers
         for (
