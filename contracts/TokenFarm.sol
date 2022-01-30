@@ -5,13 +5,12 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@chainlink/contracts/src/interfaces/AggregatorV3Interface.sol";
 
-
 contract TokenFarm is Ownable {
-    // stakeTokens
+    // stakeTokens - DONE!
     // unStakeTokens
-    // issueTokens - rewards for staking
-    // addAllowedTokens
-    // getEthValue
+    // issueTokens - rewards for staking - DONE!
+    // addAllowedTokens - DONE!
+    // getValue - DONE!
 
     // 100 ETH 1:1 for every 1 ETH, we give 1 DappToken
     // 50 ETH and 50 DAI staked, and we want to give a reward of 1 DAPP / 1 DAI
@@ -28,7 +27,10 @@ contract TokenFarm is Ownable {
         dappToken = IERC20(_dappTokenAddress);
     }
 
-    function setPriceFeedContract(address _token, address _priceFeed) public onlyOwner {
+    function setPriceFeedContract(address _token, address _priceFeed)
+        public
+        onlyOwner
+    {
         tokenPriceFeedMapping[_token] = _priceFeed;
     }
 
@@ -42,7 +44,7 @@ contract TokenFarm is Ownable {
             address recipient = stakers[stakersIndex];
             uint256 userTotalValue = getUserTotalValue(recipient);
             // send them a token reward
-            dappToken.transfer(recipient, ????);
+            dappToken.transfer(recipient, userTotalValue);
             // based on their total value locked
         }
     }
@@ -50,12 +52,26 @@ contract TokenFarm is Ownable {
     function getUserTotalValue(address _user) public view returns (uint256) {
         uint256 totalValue = 0;
         require(uniqueTokensStaked[_user] > 0, "No tokens staked!");
-        for (uint256 allowedTokensIndex = 0; allowedTokensIndex < allowedTokens.length; allowedTokensIndex++) {
-            totalValue = totalValue + getUserSingleTokenValue(_user, allowedTokens[allowedTokensIndex]);
+        for (
+            uint256 allowedTokensIndex = 0;
+            allowedTokensIndex < allowedTokens.length;
+            allowedTokensIndex++
+        ) {
+            totalValue =
+                totalValue +
+                getUserSingleTokenValue(
+                    _user,
+                    allowedTokens[allowedTokensIndex]
+                );
         }
+        return totalValue;
     }
 
-    function getUserSingleTokenValue(address _user, address _token) public view returns (uint256) {
+    function getUserSingleTokenValue(address _user, address _token)
+        public
+        view
+        returns (uint256)
+    {
         // 1 ETH -> $2,000
         // 2000
         // 200 DAI -> $200
@@ -68,14 +84,20 @@ contract TokenFarm is Ownable {
         // 10000000000000000000 ETH (18 decimals)
         // ETH/USD -> 10000000000 (8 decimals)
         // 10 * 100 = 1,000
-        return (stakingBalance[_token][_user] * price / (10**decimals));
+        return ((stakingBalance[_token][_user] * price) / (10**decimals));
     }
 
-    function getTokenValue(address _token) public view returns (uint256, uint256) {
+    function getTokenValue(address _token)
+        public
+        view
+        returns (uint256, uint256)
+    {
         // priceFeedAddress
         address priceFeedAddress = tokenPriceFeedMapping[_token];
-        AggregatorV3Interface priceFeed = AggregatorV3Interface(priceFeedAddress); 
-        (,int256 price,,,) = priceFeed.latestRoundData();
+        AggregatorV3Interface priceFeed = AggregatorV3Interface(
+            priceFeedAddress
+        );
+        (, int256 price, , , ) = priceFeed.latestRoundData();
         uint256 decimals = uint256(priceFeed.decimals());
         return (uint256(price), decimals);
     }
