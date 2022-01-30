@@ -31,17 +31,17 @@ contract TokenFarm is Ownable {
         public
         onlyOwner
     {
-        tokenPriceFeedMapping[_token] = _priceFeed;
+        tokenPriceFeedMappings[_token] = _priceFeed;
     }
 
     function issueTokens() public onlyOwner {
         // Issue tokens to all stakers
         for (
             uint256 stakerIndex = 0;
-            stakersIndex < stakers.length;
-            stakersIndex++
+            stakerIndex < stakers.length;
+            stakerIndex++
         ) {
-            address recipient = stakers[stakersIndex];
+            address recipient = stakers[stakerIndex];
             uint256 userTotalValue = getUserTotalValue(recipient);
             // send them a token reward
             dappToken.transfer(recipient, userTotalValue);
@@ -93,7 +93,7 @@ contract TokenFarm is Ownable {
         returns (uint256, uint256)
     {
         // priceFeedAddress
-        address priceFeedAddress = tokenPriceFeedMapping[_token];
+        address priceFeedAddress = tokenPriceFeedMappings[_token];
         AggregatorV3Interface priceFeed = AggregatorV3Interface(
             priceFeedAddress
         );
