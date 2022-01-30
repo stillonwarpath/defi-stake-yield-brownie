@@ -17,6 +17,7 @@ contract TokenFarm is Ownable {
     // mapping token address -> staker address -> amount
     mapping(address => mapping(address => uint256)) public stakingBalance;
     mapping(address => uint256) public uniqueTokensStaked;
+    mapping(address => address) public tokenPriceFeedMappings;
     address[] public stakers;
     address[] public allowedTokens;
     IERC20 public dappToken;
@@ -58,6 +59,10 @@ contract TokenFarm is Ownable {
         }
         // price of the token * stakingBalance[_token][user]
         getTokenValue(_token);
+    }
+
+    function getTokenValue(address _token) public view returns (uint256) {
+        // priceFeedAddress
     }
 
     function stakeTokens(uint256 _amount, address _token) public {
