@@ -1,5 +1,8 @@
 from scripts.helpful_scripts import get_account
 from brownie import DappToken, TokenFarm, network, config
+from web3 import Web3
+
+KEPT_BALANCE = Web3.toWei(100, "ether")
 
 
 def deploy_token_farm_and_dapp_token():
@@ -9,6 +12,9 @@ def deploy_token_farm_and_dapp_token():
         dapp_token.address,
         {"from": account},
         publish_source=config["networks"][network.show_active()].get("verify", False),
+    )
+    tx = dapp_token.transfer(
+        token_farm.address, dapp_token.totalSupply() - KEPT_BALANCE, {"from": account}
     )
 
 
