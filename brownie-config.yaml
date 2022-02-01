@@ -6,3 +6,10 @@ compiler:
     remappings:
       - "@openzeppelin=OpenZeppelin/openzeppelin-contracts@4.2.0"
       - "@chainlink=smartcontractkit/chainlink-brownie-contracts@0.2.1"
+networks:
+  development:
+    verify: False
+  ganache:
+    verify: False
+  kovan:
+    verify: True
