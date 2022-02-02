@@ -18,10 +18,9 @@ LOCAL_BLOCKCHAIN_ENVIRONMENTS = NON_FORKED_LOCAL_BLOCKCHAIN_ENVIRONMENTS + [
 ]
 
 contract_to_mock = {
-    "link_token": LinkToken,
     "eth_usd_price_feed": MockV3Aggregator,
-    "vrf_coordinator": VRFCoordinatorMock,
-    "oracle": MockOracle,
+    "fau_token": ???,
+    "weth_token": ???
 }
 
 DECIMALS = 18
