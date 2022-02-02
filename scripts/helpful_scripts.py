@@ -4,8 +4,8 @@ from brownie import (
     config,
     LinkToken,
     MockV3Aggregator,
-    MockOracle,
-    VRFCoordinatorMock,
+    MockWETH,
+    MockDAI,
     Contract,
 )
 from web3 import Web3
@@ -19,8 +19,8 @@ LOCAL_BLOCKCHAIN_ENVIRONMENTS = NON_FORKED_LOCAL_BLOCKCHAIN_ENVIRONMENTS + [
 
 contract_to_mock = {
     "eth_usd_price_feed": MockV3Aggregator,
-    "fau_token": ???,
-    "weth_token": ???
+    "fau_token": MockDAI,
+    "weth_token": MockWETH,
 }
 
 DECIMALS = 18
