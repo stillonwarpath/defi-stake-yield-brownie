@@ -1,4 +1,4 @@
-from brownie import network
+from brownie import network, exceptions
 import pytest
 from scripts.helpful_scripts import (
     LOCAL_BLOCKCHAIN_ENVIRONMENTS,
@@ -22,3 +22,7 @@ def test_set_price_feed_contract():
     )
     # Assert
     assert token_farm.tokenPriceFeedMappings(dapp_token.address) == price_feed_address
+    with pytest.raises(exceptions.VirtualMachineError):
+        token_farm.setPriceFeedContract(
+            dapp_token.address, price_feed_address, {"from": non_owner}
+        )
