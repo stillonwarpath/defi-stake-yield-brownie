@@ -36,6 +36,7 @@ def test_stake_tokens(amount_staked):
     token_farm, dapp_token = deploy_token_farm_and_dapp_token()
     # Act
     dapp_token.approve(token_farm.address, amount_staked, {"from": account})
+    token_farm.stakeTokens(amount_staked, dapp_token.address, {"from": account})
 
 
 def test_issue_token():
