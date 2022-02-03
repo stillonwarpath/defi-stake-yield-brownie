@@ -26,3 +26,7 @@ def test_set_price_feed_contract():
         token_farm.setPriceFeedContract(
             dapp_token.address, price_feed_address, {"from": non_owner}
         )
+
+
+def test_issue_token():
+    pass
