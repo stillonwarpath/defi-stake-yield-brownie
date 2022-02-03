@@ -37,6 +37,10 @@ def test_stake_tokens(amount_staked):
     # Act
     dapp_token.approve(token_farm.address, amount_staked, {"from": account})
     token_farm.stakeTokens(amount_staked, dapp_token.address, {"from": account})
+    # Assert
+    assert (
+        token_farm.stakingBalance(dapp_token.address, account.address) == amount_staked
+    )
 
 
 def test_issue_token():
