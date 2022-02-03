@@ -28,5 +28,15 @@ def test_set_price_feed_contract():
         )
 
 
+def test_stake_tokens(amount_staked):
+    # Arrange
+    if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
+        pytest.skip("Only for local testing!")
+    account = get_account()
+    token_farm, dapp_token = deploy_token_farm_and_dapp_token()
+    # Act
+    dapp_token.approve(token_farm.address, amount_staked, {"from": account})
+
+
 def test_issue_token():
     pass
