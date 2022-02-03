@@ -21,4 +21,4 @@ def test_set_price_feed_contract():
         dapp_token.address, price_feed_address, {"from": account}
     )
     # Assert
-    assert token_farm.tokenPriceFeedMapping(dapp_token.address) == price_feed_address
+    assert token_farm.tokenPriceFeedMappings(dapp_token.address) == price_feed_address
