@@ -16,5 +16,7 @@ export const Main = () => {
     const networkName = chainId ? helperConfig[chainId] : "dev"
     
     const dappTokenAddress = chainId ? networkMapping[String(chainId)]["DappToken"][0] : constants.AddressZero
+    const wethTokenAddress = chainId ? brownieConfig["networks"][networkName]["weth_token"] : constants.AddressZero
+    const fauTokenAddress = chainId ? brownieConfig["networks"][networkName]["fau_token"] : constants.AddressZero
     return (<div>Hi</div>)
 }
