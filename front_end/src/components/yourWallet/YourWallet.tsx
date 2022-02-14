@@ -5,5 +5,5 @@ interface YourWalletProps {
 }
 
 export const YourWallet = ({ supportedTokens }: YourWalletProps) => {
-
+  return (<div>I'm your wallet</div>)
 }
