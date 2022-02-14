@@ -6,7 +6,7 @@ import brownieConfig from '../brownie-config.json'
 import dapp from '../dapp.png'
 import eth from '../eth.png'
 import dai from '../dai.png'
-
+import { YourWallet } from './yourWallet'
 
 
 export type Token = {
@@ -48,5 +48,5 @@ export const Main = () => {
         }
     ]
 
-    return (<div>Hi</div>)
+    return (<YourWallet supportedTokens={supportedTokens} />)
 }
