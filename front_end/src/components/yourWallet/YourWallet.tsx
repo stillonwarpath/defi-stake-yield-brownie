@@ -31,6 +31,17 @@ export const YourWallet = ({ supportedTokens }: YourWalletProps) => {
               )
             })}
           </TabList>
+          {supportedTokens.map((token,index) => {
+            return (
+              <TabPanel value={index.toString()}
+                        key={index}>
+                <div>
+                  1. our wallet balance
+                  2. a big stake button  
+                </div> 
+              </TabPanel>
+            )
+          })}
         </TabContext>
       </Box>
     </Box>
