@@ -28,5 +28,5 @@ export const useStakeTokens = (tokenAddress: string) => {
     const approve = (amount: string) => {
         return approveErc20Send(tokenFarmAddress, amount)
     }
-    const [state, setState] = useState(approveErc20State)
+    return { approve, approveErc20State }
 }
