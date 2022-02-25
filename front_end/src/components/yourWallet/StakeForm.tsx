@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Token } from '../Main'
 import { useEthers, useTokenBalance, useNotifications } from '@usedapp/core'
 import { formatUnits } from '@ethersproject/units'
-import { Button, Input, CircularProgress } from '@material-ui/core'
+import { Button, Input, CircularProgress, Snackbar } from '@material-ui/core'
+import { Alert } from '@material-ui/lab/Alert'
 import { useStakeTokens } from '../../hooks'
 import { utils } from 'ethers'
 
@@ -32,12 +33,17 @@ export const StakeForm = ({ token }: StakeFormProps) => {
 
     const isMining = approveAndStakeErc20State.status === 'Mining'
 
+    const [showErc20ApprovalSuccess, setShowErc20ApprovalSuccess] = useState(false)
+    const [showStakeTokenSuccess, setShowStakeTokenSuccess] =  useState(false)
+
     useEffect(() => {
         if (notifications.filter(
             (notification) => 
                 notification.type === 'transactionSucceed' && 
                 notification.transactionName === 'Approve ERC20 transfer').length > 0) {
-                    console.log('Approved!')
+                    setShowErc20ApprovalSuccess(true)
+                    setShowStakeTokenSuccess(false)
+
                 }
         if (notifications.filter(
             (notification) => 
@@ -49,16 +55,38 @@ export const StakeForm = ({ token }: StakeFormProps) => {
 
     return (
         <>
-           <Input 
-            onChange={handleInputChange}
-           />
-           <Button
-                onClick={handleStakeSubmit}
-                color="primary"
-                size="large"
-                disabled={isMining}>
-                    {isMining ? <CircularProgress size={26} /> : 'Stake!!!'}
-            </Button> 
+            <div>
+                <Input 
+                    onChange={handleInputChange}
+                />
+                <Button
+                        onClick={handleStakeSubmit}
+                        color="primary"
+                        size="large"
+                        disabled={isMining}>
+                            {isMining ? <CircularProgress size={26} /> : 'Stake!!!'}
+                </Button>
+            </div>
+            <SnackBar
+                open={}
+                autoHideDuration={5000}
+                onClose={}>
+                <Alert
+                    onClose={}
+                    severity='success'>
+                    ERC-20 token transfer approved! Now approve the 2nd transactions
+                </Alert>
+            </SnackBar>
+            <SnackBar
+                open={}
+                autoHideDuration={5000}
+                onClose={}>
+                <Alert
+                    onClose={}
+                    severity='success'>
+                    Tokens Staked!
+                </Alert>
+            </SnackBar>  
         </>
     )
 
