@@ -1,6 +1,6 @@
 import { Token } from '../Main'
 import React, { useState } from 'react'
-import { Box } from '@material-ui/core'
+import { Box, makeStyles } from '@material-ui/core'
 import { TabContext, TabList, TabPanel } from '@material-ui/lab'
 import { Tab } from '@material-ui/core'
 import { WalletBalance } from './WalletBalance'
@@ -10,6 +10,22 @@ interface YourWalletProps {
     supportedTokens: Array<Token>
 }
 
+const useStyles = makeStyles((theme) => ({
+  tabContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: theme.spacing(4)
+  },
+  box: {
+    backgroundColor: 'white',
+    borderRadius: '25px'
+  },
+  header: {
+    color: 'white'
+  }
+}))
+
 export const YourWallet = ({ supportedTokens }: YourWalletProps) => {
 
   const [selectedTokenIndex, setSelectedTokenIndex] = useState<number>(0)
@@ -18,10 +34,12 @@ export const YourWallet = ({ supportedTokens }: YourWalletProps) => {
     setSelectedTokenIndex(parseInt(newValue))
   }
 
+  const classes = useStyles()
+
   return (
     <Box>
-      <h1>Your wallet</h1>
-      <Box>
+      <h1 className={classes.header}>Your wallet</h1>
+      <Box className={classes.box}>
         <TabContext value={selectedTokenIndex.toString()}>
           <TabList onChange={handleChange} aria-label="stake form tabs">
             {supportedTokens.map((token, index) => {
@@ -37,7 +55,7 @@ export const YourWallet = ({ supportedTokens }: YourWalletProps) => {
             return (
               <TabPanel value={index.toString()}
                         key={index}>
-                <div>
+                <div className={classes.tabContent}>
                   <WalletBalance token={supportedTokens[selectedTokenIndex]} />
                   <StakeForm token={supportedTokens[selectedTokenIndex]} />
                 </div> 
