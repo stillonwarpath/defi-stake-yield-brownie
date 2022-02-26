@@ -3,7 +3,7 @@ import { Token } from '../Main'
 import { useEthers, useTokenBalance, useNotifications } from '@usedapp/core'
 import { formatUnits } from '@ethersproject/units'
 import { Button, Input, CircularProgress, Snackbar } from '@material-ui/core'
-import { Alert } from '@material-ui/lab/Alert'
+import  Alert  from '@material-ui/lab/Alert'
 import { useStakeTokens } from '../../hooks'
 import { utils } from 'ethers'
 
@@ -36,6 +36,11 @@ export const StakeForm = ({ token }: StakeFormProps) => {
     const [showErc20ApprovalSuccess, setShowErc20ApprovalSuccess] = useState(false)
     const [showStakeTokenSuccess, setShowStakeTokenSuccess] =  useState(false)
 
+    const handleCloseSnack = () => {
+        setShowErc20ApprovalSuccess(false)
+        setShowStakeTokenSuccess(false)
+    }
+
     useEffect(() => {
         if (notifications.filter(
             (notification) => 
@@ -49,9 +54,10 @@ export const StakeForm = ({ token }: StakeFormProps) => {
             (notification) => 
                 notification.type === 'transactionSucceed' &&
                 notification.transactionName === 'Stake Tokens').length > 0) {
-                    console.log('Tokens Staked!')
+                    setShowErc20ApprovalSuccess(false)
+                    setShowStakeTokenSuccess(true)
                 }
-    }, [notifications])
+    }, [notifications, showErc20ApprovalSuccess, showStakeTokenSuccess])
 
     return (
         <>
@@ -68,21 +74,21 @@ export const StakeForm = ({ token }: StakeFormProps) => {
                 </Button>
             </div>
             <SnackBar
-                open={}
+                open={showErc20ApprovalSuccess}
                 autoHideDuration={5000}
-                onClose={}>
+                onClose={handleCloseSnack}>
                 <Alert
-                    onClose={}
+                    onClose={handleCloseSnack}
                     severity='success'>
                     ERC-20 token transfer approved! Now approve the 2nd transactions
                 </Alert>
             </SnackBar>
             <SnackBar
-                open={}
+                open={showStakeTokenSuccess}
                 autoHideDuration={5000}
-                onClose={}>
+                onClose={handleCloseSnack}>
                 <Alert
-                    onClose={}
+                    onClose={handleCloseSnack}
                     severity='success'>
                     Tokens Staked!
                 </Alert>
